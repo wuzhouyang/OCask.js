@@ -16,7 +16,8 @@ var oc=new OCask({
         'http://www.ym360.cn/upload/img/3716338.jpg'
     ],
     isGap:false,
-    imgClass:'shadow'
+    imgClass:'shadow',
+    responsive: true
 })
 
 oc.getImgs()

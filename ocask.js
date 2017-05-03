@@ -8,6 +8,7 @@
  * baseHeight : row's minimum height,default with 200px
  * imgArr : an array which store all the urls for image that you want to show
  * isGap : how to show the last row's images, baseHeight with true, container's width with false,default with false
+ * responsive : show better layout when you resize the web page, default with false
  * rowClass : add your own style class on every rows that contain the image
  * imgClass : add your own style class on every images 
  */
@@ -15,12 +16,16 @@ var OCask = (function () {
     "use strict"
     var OCask = function (ocaskConf) {
         this.container = ocaskConf.container
+        this.conWidth = this.container.offsetWidth
         this.baseHeight = ocaskConf.baseHeight || 200
         this.imgArr = ocaskConf.imgArr
         this.isGap = ocaskConf.isGap
+        this.responsive = ocaskConf.responsive
         this.rowClass = ocaskConf.rowClass || ''
         this.imgClass = ocaskConf.imgClass || ''
         this.rowArr = []
+        this.cacheImg = []
+        this.cacheImgRow = []
     }
     function _setRow(ctx, img, imgIndex) {
         var newRowW = 0
@@ -29,24 +34,28 @@ var OCask = (function () {
         _this.rowArr.push(img)
         for (var i = 0; i < _this.rowArr.length; i++) {
             newRowW += _this.rowArr[i].width
-            if (newRowW > _this.container.offsetWidth) {
+            if (newRowW > _this.conWidth) {
                 _this.rowArr.pop()
                 if (i !== 0) {
                     newRowW = newRowW - img.width
-                    newRowH = _this.container.offsetWidth * (_this.baseHeight / newRowW)
+                    newRowH = _this.conWidth * (_this.baseHeight / newRowW)
                     _genRow(_this, newRowH, false, false)
                 } else if (i === 0) {
-                    _genRow(_this, _this.container.offsetWidth, true, false)
+                    _genRow(_this, _this.conWidth, true, false)
                 }
                 _this.rowArr = [img]
             }
         }
         if (_this.rowArr.length !== 0 && imgIndex === _this.imgArr.length - 1) {
+            if(_this.rowArr.length === 1){
+                _genRow(_this, _this.conWidth, true, false)
+                return
+            } 
             if (_this.isGap) {
                 newRowH = _this.baseHeight
                 _genRow(_this, newRowH, false, true)
-            } else {
-                newRowH = _this.container.offsetWidth * (_this.baseHeight / newRowW)
+            }else {
+                newRowH = _this.conWidth * (_this.baseHeight / newRowW)
                 _genRow(_this, newRowH, false, false)
             }
         }
@@ -68,7 +77,7 @@ var OCask = (function () {
                     while (j--) {
                         resultWidth += tempWidthArr[j]
                     }
-                    var diffWidth = _this.container.offsetWidth - resultWidth
+                    var diffWidth = _this.conWidth - resultWidth
                     if (diffWidth > 0 || diffWidth < 0) {
                         tempWidth += diffWidth
                     }
@@ -86,6 +95,22 @@ var OCask = (function () {
             imgRow.appendChild(img.dom)
         }
         _this.container.appendChild(imgRow)
+        _this.cacheImgRow.push(imgRow)
+    }
+    function _resize(ctx) {
+        window.onresize = function () {
+            if (ctx.container.offsetWidth !== ctx.conWidth) {
+                ctx.conWidth = ctx.container.offsetWidth
+                ctx.rowArr = [] 
+                var containerNodes = ctx.container.childNodes
+                for (var i = containerNodes.length - 1; i >= 0; i--) {
+                    ctx.container.removeChild(containerNodes[i])
+                }
+                for (var i = 0; i < ctx.cacheImg.length; i++) {
+                    _setRow(ctx, ctx.cacheImg[i], i)
+                }
+            }
+        }
     }
     OCask.prototype = {
         getImgs: function () {
@@ -95,6 +120,7 @@ var OCask = (function () {
                     var imgTemp = new Image()
                     imgTemp.src = _this.imgArr[imgIndex]
                     imgTemp.onload = (function (imgTemp) {
+                        imgIndex === _this.imgArr.length - 1 && _this.responsive ? _resize(_this) : {}
                         return function () {
                             var scale = imgTemp.width / imgTemp.height
                             var img = {
@@ -104,6 +130,7 @@ var OCask = (function () {
                                 width: _this.baseHeight * scale
                             }
                             _setRow(_this, img, imgIndex)
+                            _this.cacheImg.push(img)
                             _this.imgArr[imgIndex + 1] ? imgLoadRecur(imgIndex + 1) : {}
                         }
                     })(imgTemp)
