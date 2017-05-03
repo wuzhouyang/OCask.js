@@ -57,9 +57,36 @@ Use the minify javscript on your html.
 It look like:  
 
 ![default_css](https://github.com/wuzhouyang/OCask.js/blob/master/screenShot/default_css.png)
+
 ### Gap
 If you don't want to show the last row with full width, you can set the `isGap` to be `true`, and it will look like  
 
 ![gap](https://github.com/wuzhouyang/OCask.js/blob/master/screenShot/gap.png)
+
 ### Responsive
-soon...
+If you want to make the image to adapt the container's width when you use the CSS3 Media Queries, you can set the `responsive` to be `true`, this is the example:  
+
+``` css
+  #ex{
+      width: 1200px;
+      margin:auto;
+      margin-top: 50px;
+      margin-bottom: 50px;
+  }
+
+  @media screen and (max-width:768px){
+      #ex{
+          width: 600px;
+      }
+  }
+```
+``` javascript
+  var oc=new OCask({
+      ...
+      responsive: true
+  })
+  oc.getImgs()
+```
+When you resize the web page, it will respond automatically, like:  
+
+![responsive](https://github.com/wuzhouyang/OCask.js/blob/master/screenShot/responsive.png)
