@@ -1,0 +1,20 @@
+body,html{
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    background: #717171;
+}
+*{
+    margin: 0;
+    padding: 0;
+}
+#ex{
+    width: 1200px;
+    margin:auto;
+    margin-top: 50px;
+}
+
+.shadow{
+    box-shadow: 0 0 50px rgba(0,0,0,0.8);
+}
