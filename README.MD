@@ -3,9 +3,15 @@
 ![default](https://github.com/wuzhouyang/OCask.js/blob/master/screenShot/default.png)
 ### Usage
 ``` bash
-  git clone https://github.com/wuzhouyang/OCask.js.git
+  npm install ocask.js --save
 ```
-Use the minify javscript on your html.
+If you use the webpack or es6,you can use
+``` javascript
+  var OCask = require('ocask.js')
+  // or
+  import OCask from 'ocask.js'
+```
+You can use the minify javscript on your html.
 ``` html
   <body>
     ...
@@ -32,7 +38,7 @@ Use the minify javscript on your html.
   }
 ```
 ``` javascript
-  var oc=new OCask({
+  var oc=new ocask({
       container:document.getElementById('ex'),
       baseHeight:200,
       imgArr:[

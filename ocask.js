@@ -12,8 +12,14 @@
  * rowClass : add your own style class on every rows that contain the image
  * imgClass : add your own style class on every images 
  */
-var OCask = (function () {
+(function (root, fac) {
     "use strict"
+    if (typeof module === 'object' && module.exports) {
+        module.exports = fac()
+    } else {
+        root.OCask = fac()
+    }
+})(typeof window !== 'undefined' ? window : this, function () {
     var OCask = function (ocaskConf) {
         this.container = ocaskConf.container
         this.conWidth = this.container.offsetWidth
@@ -47,14 +53,14 @@ var OCask = (function () {
             }
         }
         if (_this.rowArr.length !== 0 && imgIndex === _this.imgArr.length - 1) {
-            if(_this.rowArr.length === 1){
+            if (_this.rowArr.length === 1) {
                 _genRow(_this, _this.conWidth, true, false)
                 return
-            } 
+            }
             if (_this.isGap) {
                 newRowH = _this.baseHeight
                 _genRow(_this, newRowH, false, true)
-            }else {
+            } else {
                 newRowH = _this.conWidth * (_this.baseHeight / newRowW)
                 _genRow(_this, newRowH, false, false)
             }
@@ -101,7 +107,7 @@ var OCask = (function () {
         window.onresize = function () {
             if (ctx.container.offsetWidth !== ctx.conWidth) {
                 ctx.conWidth = ctx.container.offsetWidth
-                ctx.rowArr = [] 
+                ctx.rowArr = []
                 var containerNodes = ctx.container.childNodes
                 for (var i = containerNodes.length - 1; i >= 0; i--) {
                     ctx.container.removeChild(containerNodes[i])
@@ -140,4 +146,5 @@ var OCask = (function () {
         }
     }
     return OCask
-})()
+})
+
