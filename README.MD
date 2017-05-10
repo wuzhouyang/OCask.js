@@ -135,6 +135,7 @@ Then make a ocask config like:
   })
 ```
 And you can use the lightgallery.js happily
+
 ![lightgallery](https://github.com/wuzhouyang/OCask.js/blob/master/screenShot/lightgallery.png)
 
 ### Callback
