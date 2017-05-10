@@ -20,4 +20,6 @@ var oc=new OCask({
     responsive: true
 })
 
-oc.getImgs()
+oc.getImgs(function(){
+    console.log('cb')
+})

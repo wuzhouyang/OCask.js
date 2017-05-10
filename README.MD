@@ -97,3 +97,11 @@ If you want to make the image to adapt the container's width when you use the CS
 When you resize the web page, it will respond automatically, like:  
 
 ![responsive](https://github.com/wuzhouyang/OCask.js/blob/master/screenShot/responsive.png)
+
+### Callback
+You can do somethings after all the images have loaded like
+``` javascript
+  oc.getImgs(function(){
+    ...
+  })
+```

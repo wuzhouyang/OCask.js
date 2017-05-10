@@ -120,7 +120,7 @@
         }
     }
     OCask.prototype = {
-        getImgs: function () {
+        getImgs: function (cb) {
             var _this = this
             if (_this.imgArr.length !== 0) {
                 var imgLoadRecur = function (imgIndex) {
@@ -138,7 +138,8 @@
                             }
                             _setRow(_this, img, imgIndex)
                             _this.cacheImg.push(img)
-                            _this.imgArr[imgIndex + 1] ? imgLoadRecur(imgIndex + 1) : {}
+                            //callback
+                            _this.imgArr[imgIndex + 1] ? imgLoadRecur(imgIndex + 1) : cb()
                         }
                     })(imgTemp)
                 }
