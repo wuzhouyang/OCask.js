@@ -17,9 +17,11 @@ var oc=new OCask({
     ],
     isGap:false,
     imgClass:'shadow',
-    responsive: true
+    responsive: true,
+    lightGallery:true,
+    lightGalleryConf:{
+        speed:'100'
+    }
 })
 
-oc.getImgs(function(){
-    console.log('cb')
-})
+oc.getImgs()

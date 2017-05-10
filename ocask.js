@@ -9,6 +9,8 @@
  * imgArr : an array which store all the urls for image that you want to show
  * isGap : how to show the last row's images, baseHeight with true, container's width with false,default with false
  * responsive : show better layout when you resize the web page, default with false
+ * lightGallery : integrate lightgallery.js
+ * lightGalleryConf : lightgallery.js's config
  * rowClass : add your own style class on every rows that contain the image
  * imgClass : add your own style class on every images 
  */
@@ -27,6 +29,8 @@
         this.imgArr = ocaskConf.imgArr
         this.isGap = ocaskConf.isGap
         this.responsive = ocaskConf.responsive
+        this.lightGallery = ocaskConf.lightGallery
+        this.lightGalleryConf = ocaskConf.lightGalleryConf ? ocaskConf.lightGalleryConf : {}
         this.rowClass = ocaskConf.rowClass || ''
         this.imgClass = ocaskConf.imgClass || ''
         this.rowArr = []
@@ -54,7 +58,7 @@
         }
         if (_this.rowArr.length !== 0 && imgIndex === _this.imgArr.length - 1) {
             if (_this.rowArr.length === 1) {
-                _genRow(_this, _this.conWidth, true, false)
+                _genRow(_this, _this.conWidth, true, true)
                 return
             }
             if (_this.isGap) {
@@ -62,7 +66,7 @@
                 _genRow(_this, newRowH, false, true)
             } else {
                 newRowH = _this.conWidth * (_this.baseHeight / newRowW)
-                _genRow(_this, newRowH, false, false)
+                _genRow(_this, newRowH, false, true)
             }
         }
     }
@@ -78,7 +82,7 @@
                 var tempWidth = Math.round(img.scale * rowFlag)
                 tempWidthArr.push(tempWidth)
                 tempHeight = Math.round(rowFlag)
-                if (!lastOne && i === _this.rowArr.length - 1) {
+                if (!ctx.isGap && i === _this.rowArr.length - 1) {
                     var j = i + 1
                     var resultWidth = 0
                     while (j--) {
@@ -99,10 +103,23 @@
             _this.imgClass ? img.dom.setAttribute('class', _this.imgClass) : {}
             imgRow.style.height = tempHeight + 'px'
             _this.rowClass ? imgRow.setAttribute('class', _this.rowClass) : {}
-            imgRow.appendChild(img.dom)
+            if (_this.lightGallery) {
+                var lg = document.createElement('div')
+                lg.style.display = 'inline-block'
+                lg.setAttribute('data-src', img.dom.src)
+                lg.appendChild(img.dom)
+                imgRow.appendChild(lg)
+            } else {
+                imgRow.appendChild(img.dom)
+            }
         }
         _this.container.appendChild(imgRow)
         _this.cacheImgRow.push(imgRow)
+        if (lastOne && _this.lightGallery && lightGallery) {
+            for (var i = 0; i < _this.container.children.length; i++) {
+                lightGallery(_this.container.children[i], _this.lightGalleryConf)
+            }
+        }
     }
     function _resize(ctx) {
         window.onresize = function () {
@@ -138,8 +155,13 @@
                             }
                             _setRow(_this, img, imgIndex)
                             _this.cacheImg.push(img)
-                            //callback
-                            _this.imgArr[imgIndex + 1] ? imgLoadRecur(imgIndex + 1) : cb()
+                            // end of images  ?
+                            if (_this.imgArr[imgIndex + 1]) {
+                                imgLoadRecur(imgIndex + 1)
+                            } else {
+                                //callback
+                                typeof cb === 'function' ? cb() : {}
+                            }
                         }
                     })(imgTemp)
                 }

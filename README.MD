@@ -20,12 +20,14 @@ You can use the minify javscript on your html.
 ```
 ### Config
 * **container** : container's element  
-* **baseHeight** : row's minimum height,default with 200px  
+* **baseHeight** : row's minimum height,default with `200px`  
 * **imgArr** : an array which store all the urls for image that you want to show  
-* **isGap** : how to show the last row's images, baseHeight with true, container's width with false, default with false  
+* **isGap** : how to show the last row's images, baseHeight with true, container's width with `false`, default with `false` 
 * **rowClass** : add your own style class on every rows that contain the image  
 * **imgClass** : add your own style class on every images   
 * **responsive** : set the images to adjust the container 
+* **lightGallery** : enable to integrate [lightgallery.js](https://github.com/sachinchoolur/lightgallery.js),default with `false`
+* **lightGalleryConf** : some config of the [lightgallery.js](https://github.com/sachinchoolur/lightgallery.js),default with `{}`
 ### Example
 ``` css
   #ex{
@@ -97,6 +99,43 @@ If you want to make the image to adapt the container's width when you use the CS
 When you resize the web page, it will respond automatically, like:  
 
 ![responsive](https://github.com/wuzhouyang/OCask.js/blob/master/screenShot/responsive.png)
+
+### lightgallery
+lightgallery.js is a Full featured JavaScript image & video gallery. If you want to integrate it with your project,you should:
+``` bash
+  npm install lightgallery.js --save
+```
+And then use it like:
+``` html
+  <head>
+      ...
+      <link rel="stylesheet" href="lightgallery.min.css">
+      ...
+  </head>
+  <body>
+      ...
+      <script src='lightgallery.min.js'></script>
+      <script src="ocask.min.js"></script>
+      ...
+  </body>
+```
+Or if you use the webpack or es6,you can use
+``` javascript
+  import 'lightgallery.js'
+```
+Then make a ocask config like:
+``` javascript
+  var oc=new OCask({
+      ...
+      lightGallery:true,
+      lightGalleryConf:{
+          speed:'100',
+          ...
+      }
+  })
+```
+And you can use the lightgallery.js happily
+!(lightgallery)[https://github.com/wuzhouyang/OCask.js/blob/master/screenShot/lightgallery.png]
 
 ### Callback
 You can do somethings after all the images have loaded like
