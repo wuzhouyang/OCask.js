@@ -69,6 +69,9 @@
     function _genRow(ctx, rowFlag, isOne, lastOne) {
         var _this = ctx
         var imgRow = document.createElement('div')
+        imgRow.style.maxWidth = ctx.conWidth + 'px'
+        imgRow.style.overflow = "hidden"
+        imgRow.style.whiteSpace = "nowrap"
         var tempWidthArr = []
         var tempHeight = 0
         for (var i = 0; i < _this.rowArr.length; i++) {
