@@ -25,6 +25,7 @@ You can use the minify javscript on your html.
 * **isGap** : how to show the last row's images, baseHeight with true, container's width with false, default with false  
 * **rowClass** : add your own style class on every rows that contain the image  
 * **imgClass** : add your own style class on every images   
+* **responsive** : set the images to adjust the container 
 ### Example
 ``` css
   #ex{
