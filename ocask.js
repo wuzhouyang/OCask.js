@@ -122,7 +122,7 @@
         }
     }
     function _resize(ctx) {
-        window.onresize = function () {
+        window.addEventListener('resize',function () {
             if (ctx.container.offsetWidth !== ctx.conWidth) {
                 ctx.conWidth = ctx.container.offsetWidth
                 ctx.rowArr = []
@@ -134,7 +134,7 @@
                     _setRow(ctx, ctx.cacheImg[i], i)
                 }
             }
-        }
+        })
     }
     OCask.prototype = {
         getImgs: function (cb) {
