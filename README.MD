@@ -22,12 +22,12 @@ You can use the minify javscript on your html.
 * **container** : container's element  
 * **baseHeight** : row's minimum height,default with `200px`  
 * **imgArr** : an array which store all the urls for image that you want to show  
-* **isGap** : how to show the last row's images, baseHeight with true, container's width with `false`, default with `false` 
+* **isGap** : how to show the last row's images, baseHeight with true, container's width with `false` , default with `false` 
 * **rowClass** : add your own style class on every rows that contain the image  
 * **imgClass** : add your own style class on every images   
 * **responsive** : set the images to adjust the container 
-* **lightGallery** : enable to integrate [lightgallery.js](https://github.com/sachinchoolur/lightgallery.js),default with `false`
-* **lightGalleryConf** : some config of the [lightgallery.js](https://github.com/sachinchoolur/lightgallery.js),default with `{}`
+* **lightGallery** : enable to integrate [lightgallery.js](https://github.com/sachinchoolur/lightgallery.js) , default with `false`
+* **lightGalleryConf** : some config of the [lightgallery.js](https://github.com/sachinchoolur/lightgallery.js) , default with `{}`
 ### Example
 ``` css
   #ex{
@@ -135,7 +135,8 @@ Then make a ocask config like:
   })
 ```
 And you can use the lightgallery.js happily
-!(lightgallery)[https://github.com/wuzhouyang/OCask.js/blob/master/screenShot/lightgallery.png]
+
+![lightgallery](https://github.com/wuzhouyang/OCask.js/blob/master/screenShot/lightgallery.png)
 
 ### Callback
 You can do somethings after all the images have loaded like
